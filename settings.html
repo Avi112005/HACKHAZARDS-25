@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - GroqMate AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Customize your GroqMate AI assistant experience">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.svg" alt="GroqMate Logo">
+                <span>GroqMate</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="chat.html">Chat</a>
+                <a href="about.html">About</a>
+                <a href="settings.html" class="active">Settings</a>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main class="settings-container">
+        <h1>Settings</h1>
+        <p class="settings-description">Customize your GroqMate experience to suit your preferences.</p>
+
+        <div class="settings-section">
+            <h2>Appearance</h2>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h3>Dark Mode</h3>
+                    <p>Switch between light and dark theme</p>
+                </div>
+                <div class="setting-control">
+                    <label class="toggle">
+                        <input type="checkbox" id="dark-mode-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Language</h2>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h3>Interface Language</h3>
+                    <p>Select your preferred language</p>
+                </div>
+                <div class="setting-control">
+                    <select id="language-setting">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Voice & Audio</h2>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h3>Voice Input</h3>
+                    <p>Enable or disable voice input</p>
+                </div>
+                <div class="setting-control">
+                    <label class="toggle">
+                        <input type="checkbox" id="voice-input-toggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h3>Voice Output</h3>
+                    <p>Enable or disable AI voice responses</p>
+                </div>
+                <div class="setting-control">
+                    <label class="toggle">
+                        <input type="checkbox" id="voice-output-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Chat Settings</h2>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h3>Message History</h3>
+                    <p>Clear your conversation history</p>
+                </div>
+                <div class="setting-control">
+                    <button id="clear-history" class="btn btn-danger">Clear History</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="logo.svg" alt="GroqMate Logo">
+                <span>GroqMate</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="chat.html">Chat</a>
+                <a href="about.html">About</a>
+                <a href="settings.html">Settings</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GroqMate. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script src="settings.js"></script>
+</body>
+</html>
