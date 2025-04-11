@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
     let recognition;
     let isListening = false;
-    let uploadedImage = null; // store image in base64
+    let uploadedImage = null;
   
     function formatTime() {
       const now = new Date();
@@ -24,18 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function addMessage(text, sender) {
       const msgDiv = document.createElement('div');
       msgDiv.className = `message ${sender}-message`;
-  
       const content = document.createElement('div');
       content.className = 'message-content';
-  
       const p = document.createElement('p');
       p.textContent = text;
       content.appendChild(p);
-  
       const time = document.createElement('div');
       time.className = 'message-time';
       time.textContent = formatTime();
-  
       msgDiv.appendChild(content);
       msgDiv.appendChild(time);
       chatMessages.appendChild(msgDiv);
@@ -43,68 +39,68 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   
     function sendMessage() {
-  const message = chatInput.value.trim();
-  const selectedLang = languageSelect?.value || 'English';
-
-  if (!message && !uploadedImage) return;
-
-  // Show user message + optional image preview
-  const msgDiv = document.createElement('div');
-  msgDiv.className = 'message user-message';
-  const content = document.createElement('div');
-  content.className = 'message-content';
-
-  if (message) {
-    const p = document.createElement('p');
-    p.textContent = message;
-    content.appendChild(p);
-  }
-
-  if (uploadedImage) {
-    const img = document.createElement('img');
-    img.src = uploadedImage;
-    img.className = 'message-image';
-    content.appendChild(img);
-  }
-
-  const time = document.createElement('div');
-  time.className = 'message-time';
-  time.textContent = formatTime();
-
-  msgDiv.appendChild(content);
-  msgDiv.appendChild(time);
-  chatMessages.appendChild(msgDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-
-  // Build prompt for Groq
-  const finalPrompt = uploadedImage
-    ? message
-      ? `The user uploaded an image and wrote: "${message}". Based on that, describe what the image could contain.`
-      : "The user uploaded an image. Please imagine and describe what could be in the image creatively."
-    : message;
-
-  // Call /api/chat only
-  fetch('http://localhost:5000/api/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: finalPrompt, language: selectedLang })
-  })
-    .then(async res => {
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      addMessage(data.reply || "🤖 No response from Groq.", 'bot');
-    })
-    .catch(err => {
-      console.error('Chat API error:', err);
-      addMessage("⚠️ Something went wrong talking to GroqMate.", 'bot');
-    });
-
-  // Reset input and image
-  chatInput.value = '';
-  uploadedImage = null;
-  previewContainer.innerHTML = '';
-  previewContainer.style.display = 'none';
-}
+      const message = chatInput.value.trim();
+      const selectedLang = languageSelect?.value || 'English';
+      if (!message && !uploadedImage) return;
+  
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user-message';
+      const content = document.createElement('div');
+      content.className = 'message-content';
+  
+      if (message) {
+        const p = document.createElement('p');
+        p.textContent = message;
+        content.appendChild(p);
+      }
+  
+      if (uploadedImage) {
+        const img = document.createElement('img');
+        img.src = uploadedImage;
+        img.className = 'message-image';
+        content.appendChild(img);
+      }
+  
+      const time = document.createElement('div');
+      time.className = 'message-time';
+      time.textContent = formatTime();
+  
+      userMsg.appendChild(content);
+      userMsg.appendChild(time);
+      chatMessages.appendChild(userMsg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+  
+      if (uploadedImage) {
+        fetch('http://localhost:5000/api/vision', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ base64Image: uploadedImage, message })
+        })
+          .then(res => res.json())
+          .then(data => addMessage(data.reply || '🤖 No response from Gemini.', 'bot'))
+          .catch(err => {
+            console.error('Gemini Vision API error:', err);
+            addMessage('⚠️ Image processing failed.', 'bot');
+          });
+      } else {
+        fetch('http://localhost:5000/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, language: selectedLang })
+        })
+          .then(res => res.json())
+          .then(data => addMessage(data.reply || '🤖 No response from Groq.', 'bot'))
+          .catch(err => {
+            console.error('Groq Chat API error:', err);
+            addMessage('⚠️ Chat failed.', 'bot');
+          });
+      }
+  
+      chatInput.value = '';
+      uploadedImage = null;
+      previewContainer.innerHTML = '';
+      previewContainer.style.display = 'none';
+    }
   
     function handleFileUpload(files) {
       for (const file of files) {
@@ -112,8 +108,6 @@ document.addEventListener('DOMContentLoaded', function () {
           const reader = new FileReader();
           reader.onload = function (e) {
             uploadedImage = e.target.result;
-  
-            // Show preview
             previewContainer.innerHTML = '';
             const img = document.createElement('img');
             img.src = uploadedImage;
@@ -125,8 +119,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
-  
-    // === Event Listeners ===
   
     if (sendButton) sendButton.addEventListener('click', sendMessage);
   
@@ -140,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (micButton) {
       micButton.addEventListener('click', () => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) return alert("Your browser doesn't support voice input.");
+        if (!SpeechRecognition) return alert("Voice input not supported.");
   
         if (!recognition) {
           recognition = new SpeechRecognition();
@@ -148,8 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
           recognition.interimResults = false;
   
           recognition.onresult = event => {
-            const transcript = event.results[0][0].transcript;
-            chatInput.value = transcript;
+            chatInput.value = event.results[0][0].transcript;
           };
   
           recognition.onerror = e => console.error('Speech error:', e.error);
