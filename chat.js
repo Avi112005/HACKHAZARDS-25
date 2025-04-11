@@ -190,24 +190,23 @@ document.addEventListener('DOMContentLoaded', function() {
         previewContainer.innerHTML = '';
         previewContainer.style.display = 'none';
         
-        // Simulate bot response (in a real app, you'd call an API here)
-        setTimeout(() => {
-            let botResponse = "I'm processing your request. This is a simulated response from GroqMate.";
-            
-            // Simple responses for demo purposes
-            if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
-                botResponse = "Hello! How can I assist you today?";
-            } else if (message.toLowerCase().includes('help')) {
-                botResponse = "I'm here to help! You can ask me questions, request information, or just chat.";
-            } else if (message.toLowerCase().includes('weather')) {
-                botResponse = "I'm sorry, I don't have access to real-time weather data in this demo. In a real implementation, I would connect to a weather API to provide you with accurate forecasts.";
-            } else if (message.toLowerCase().includes('thank')) {
-                botResponse = "You're welcome! Is there anything else I can help you with?";
-            }
-            
-            addMessage(botResponse, 'bot');
-        }, 1000);
-    }
+      
+      fetch('http://localhost:5000/api/chat', {
+        method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message })
+})
+.then(async res => {
+    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+    const data = await res.json();
+    addMessage(data.reply, 'bot');
+})
+.catch(err => {
+    console.error('API error:', err);
+    addMessage("⚠️ Oops! Something went wrong while talking to GroqMate.", 'bot');
+});    }
     
     // Event Listeners
     if (sendButton) {
