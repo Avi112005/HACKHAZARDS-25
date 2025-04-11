@@ -1,274 +1,199 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
+document.addEventListener('DOMContentLoaded', function () {
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
     const sendButton = document.getElementById('send-button');
     const micButton = document.getElementById('mic-button');
+    const languageSelect = document.getElementById('language-select');
     const imageUpload = document.getElementById('image-upload');
     const previewContainer = document.getElementById('image-preview-container');
     const dragDropOverlay = document.getElementById('drag-drop-overlay');
-    
-    // State
+  
+    let recognition;
     let isListening = false;
-    let recognition = null;
-    let uploadedImages = [];
-    
-    // Initialize Web Speech API
-    function initSpeechRecognition() {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        
-        if (SpeechRecognition) {
-            recognition = new SpeechRecognition();
-            recognition.continuous = true;
-            recognition.interimResults = true;
-            recognition.lang = 'en-US';
-            
-            recognition.onresult = function(event) {
-                const transcript = Array.from(event.results)
-                    .map(result => result[0])
-                    .map(result => result.transcript)
-                    .join('');
-                
-                chatInput.value = transcript;
-                
-                // Auto resize the textarea
-                autoResizeTextarea(chatInput);
-            };
-            
-            recognition.onend = function() {
-                isListening = false;
-                micButton.classList.remove('active');
-                micButton.querySelector('i').className = 'fas fa-microphone';
-            };
-        } else {
-            micButton.style.display = 'none';
-            alert("Your browser doesn't support speech recognition. Try Chrome or Edge.");
-        }
+    let uploadedImage = null; // store image in base64
+  
+    function formatTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      return `${hours}:${minutes} ${ampm}`;
     }
-    
-    // Toggle speech recognition
-    function toggleSpeechRecognition() {
-        // Check if voice input is enabled in settings
-        const voiceInputEnabled = localStorage.getItem('voiceInput') !== 'false';
-        
-        if (!voiceInputEnabled) {
-            alert('Voice input is disabled in settings. Please enable it to use this feature.');
-            return;
+  
+    function addMessage(text, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${sender}-message`;
+  
+      const content = document.createElement('div');
+      content.className = 'message-content';
+  
+      const p = document.createElement('p');
+      p.textContent = text;
+      content.appendChild(p);
+  
+      const time = document.createElement('div');
+      time.className = 'message-time';
+      time.textContent = formatTime();
+  
+      msgDiv.appendChild(content);
+      msgDiv.appendChild(time);
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+  
+    function sendMessage() {
+  const message = chatInput.value.trim();
+  const selectedLang = languageSelect?.value || 'English';
+
+  if (!message && !uploadedImage) return;
+
+  // Show user message + optional image preview
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'message user-message';
+  const content = document.createElement('div');
+  content.className = 'message-content';
+
+  if (message) {
+    const p = document.createElement('p');
+    p.textContent = message;
+    content.appendChild(p);
+  }
+
+  if (uploadedImage) {
+    const img = document.createElement('img');
+    img.src = uploadedImage;
+    img.className = 'message-image';
+    content.appendChild(img);
+  }
+
+  const time = document.createElement('div');
+  time.className = 'message-time';
+  time.textContent = formatTime();
+
+  msgDiv.appendChild(content);
+  msgDiv.appendChild(time);
+  chatMessages.appendChild(msgDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // Build prompt for Groq
+  const finalPrompt = uploadedImage
+    ? message
+      ? `The user uploaded an image and wrote: "${message}". Based on that, describe what the image could contain.`
+      : "The user uploaded an image. Please imagine and describe what could be in the image creatively."
+    : message;
+
+  // Call /api/chat only
+  fetch('http://localhost:5000/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: finalPrompt, language: selectedLang })
+  })
+    .then(async res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      addMessage(data.reply || "🤖 No response from Groq.", 'bot');
+    })
+    .catch(err => {
+      console.error('Chat API error:', err);
+      addMessage("⚠️ Something went wrong talking to GroqMate.", 'bot');
+    });
+
+  // Reset input and image
+  chatInput.value = '';
+  uploadedImage = null;
+  previewContainer.innerHTML = '';
+  previewContainer.style.display = 'none';
+}
+  
+    function handleFileUpload(files) {
+      for (const file of files) {
+        if (file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            uploadedImage = e.target.result;
+  
+            // Show preview
+            previewContainer.innerHTML = '';
+            const img = document.createElement('img');
+            img.src = uploadedImage;
+            img.className = 'message-image';
+            previewContainer.appendChild(img);
+            previewContainer.style.display = 'flex';
+          };
+          reader.readAsDataURL(file);
         }
-        
+      }
+    }
+  
+    // === Event Listeners ===
+  
+    if (sendButton) sendButton.addEventListener('click', sendMessage);
+  
+    chatInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  
+    if (micButton) {
+      micButton.addEventListener('click', () => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) return alert("Your browser doesn't support voice input.");
+  
         if (!recognition) {
-            initSpeechRecognition();
-        }
-        
-        if (!isListening) {
-            recognition.start();
-            isListening = true;
-            micButton.classList.add('active');
-            micButton.querySelector('i').className = 'fas fa-microphone-slash';
-        } else {
-            recognition.stop();
+          recognition = new SpeechRecognition();
+          recognition.lang = 'en-US';
+          recognition.interimResults = false;
+  
+          recognition.onresult = event => {
+            const transcript = event.results[0][0].transcript;
+            chatInput.value = transcript;
+          };
+  
+          recognition.onerror = e => console.error('Speech error:', e.error);
+          recognition.onend = () => {
             isListening = false;
             micButton.classList.remove('active');
-            micButton.querySelector('i').className = 'fas fa-microphone';
+          };
         }
-    }
-    
-    // Auto resize textarea
-    function autoResizeTextarea(textarea) {
-        textarea.style.height = 'auto';
-        textarea.style.height = (textarea.scrollHeight) + 'px';
-    }
-    
-    // Format current time
-    function formatTime() {
-        const now = new Date();
-        let hours = now.getHours();
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        
-        return `${hours}:${minutes} ${ampm}`;
-    }
-    
-    // Add a message to the chat
-    function addMessage(content, sender, images = []) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${sender}-message`;
-        
-        const messageContent = document.createElement('div');
-        messageContent.className = 'message-content';
-        
-        const paragraph = document.createElement('p');
-        paragraph.textContent = content;
-        messageContent.appendChild(paragraph);
-        
-        // Add images if any
-        if (images && images.length > 0) {
-            images.forEach(imageUrl => {
-                const img = document.createElement('img');
-                img.src = imageUrl;
-                img.alt = 'Shared image';
-                img.className = 'message-image';
-                messageContent.appendChild(img);
-            });
+  
+        if (!isListening) {
+          recognition.start();
+          isListening = true;
+          micButton.classList.add('active');
+        } else {
+          recognition.stop();
         }
-        
-        const messageTime = document.createElement('div');
-        messageTime.className = 'message-time';
-        messageTime.textContent = formatTime();
-        
-        messageDiv.appendChild(messageContent);
-        messageDiv.appendChild(messageTime);
-        
-        chatMessages.appendChild(messageDiv);
-        
-        // Scroll to bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+      });
     }
-    
-    // Handle file upload
-    function handleFileUpload(files) {
-        for (const file of files) {
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const imageUrl = e.target.result;
-                    uploadedImages.push(imageUrl);
-                    
-                    // Create preview
-                    const previewDiv = document.createElement('div');
-                    previewDiv.className = 'image-preview';
-                    
-                    const img = document.createElement('img');
-                    img.src = imageUrl;
-                    img.alt = 'Preview';
-                    
-                    const removeBtn = document.createElement('button');
-                    removeBtn.className = 'remove-btn';
-                    removeBtn.innerHTML = '×';
-                    removeBtn.addEventListener('click', function() {
-                        const index = uploadedImages.indexOf(imageUrl);
-                        if (index > -1) {
-                            uploadedImages.splice(index, 1);
-                        }
-                        previewDiv.remove();
-                        
-                        if (uploadedImages.length === 0) {
-                            previewContainer.style.display = 'none';
-                        }
-                    });
-                    
-                    previewDiv.appendChild(img);
-                    previewDiv.appendChild(removeBtn);
-                    previewContainer.appendChild(previewDiv);
-                    previewContainer.style.display = 'flex';
-                };
-                
-                reader.readAsDataURL(file);
-            }
-        }
-    }
-    
-    // Send message
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        
-        if (message === '' && uploadedImages.length === 0) {
-            return;
-        }
-        
-        // Add user message
-        addMessage(message, 'user', uploadedImages);
-        
-        // Clear input and images
-        chatInput.value = '';
-        chatInput.style.height = 'auto';
-        uploadedImages = [];
-        previewContainer.innerHTML = '';
-        previewContainer.style.display = 'none';
-        
-      
-      fetch('http://localhost:5000/api/chat', {
-        method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ message })
-})
-.then(async res => {
-    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-    const data = await res.json();
-    addMessage(data.reply, 'bot');
-})
-.catch(err => {
-    console.error('API error:', err);
-    addMessage("⚠️ Oops! Something went wrong while talking to GroqMate.", 'bot');
-});    }
-    
-    // Event Listeners
-    if (sendButton) {
-        sendButton.addEventListener('click', sendMessage);
-    }
-    
-    if (chatInput) {
-        chatInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-        
-        chatInput.addEventListener('input', function() {
-            autoResizeTextarea(this);
-        });
-    }
-    
-    if (micButton) {
-        micButton.addEventListener('click', toggleSpeechRecognition);
-    }
-    
+  
     if (imageUpload) {
-        imageUpload.addEventListener('change', function(e) {
-            handleFileUpload(e.target.files);
-        });
+      imageUpload.addEventListener('change', e => {
+        handleFileUpload(e.target.files);
+      });
     }
-    
-    // Drag and drop functionality
-    document.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        dragDropOverlay.classList.add('active');
+  
+    document.addEventListener('dragover', e => {
+      e.preventDefault();
+      dragDropOverlay.classList.add('active');
     });
-    
-    document.addEventListener('dragleave', function(e) {
-        if (!e.relatedTarget || e.relatedTarget.nodeName === 'HTML') {
-            dragDropOverlay.classList.remove('active');
-        }
-    });
-    
-    dragDropOverlay.addEventListener('dragover', function(e) {
-        e.preventDefault();
-    });
-    
-    dragDropOverlay.addEventListener('drop', function(e) {
-        e.preventDefault();
+  
+    document.addEventListener('dragleave', e => {
+      if (!e.relatedTarget || e.relatedTarget.nodeName === 'HTML') {
         dragDropOverlay.classList.remove('active');
-        
-        if (e.dataTransfer.files) {
-            handleFileUpload(e.dataTransfer.files);
-        }
+      }
     });
-    
-    // Initialize
-    initSpeechRecognition();
-    
-    // Load chat history from localStorage
-    const chatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]');
-    if (chatHistory.length > 0) {
-        chatHistory.forEach(msg => {
-            addMessage(msg.content, msg.sender, msg.images || []);
-        });
-    }
-});
+  
+    dragDropOverlay.addEventListener('dragover', e => e.preventDefault());
+  
+    dragDropOverlay.addEventListener('drop', e => {
+      e.preventDefault();
+      dragDropOverlay.classList.remove('active');
+      if (e.dataTransfer.files) {
+        handleFileUpload(e.dataTransfer.files);
+      }
+    });
+  });
+  
