@@ -17,22 +17,31 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static('public'));
 
-// === Groq Chat API ===
+// === /api/chat — Groq chat with coder model switch ===
 app.post('/api/chat', async (req, res) => {
   const { message, language } = req.body;
 
+  // Detect if the message is code-related
+  const isCodingQuery = /code|function|loop|program|syntax|bug|error|compile|algorithm|write|java|python|c\+\+|html|css|javascript|react/i.test(message);
+
+  // Choose model based on content
+  const model = isCodingQuery
+    ? "qwen-2.5-coder-32b"
+    : "meta-llama/llama-4-scout-17b-16e-instruct";
+
   try {
     const chatCompletion = await groq.chat.completions.create({
-      model: "meta-llama/llama-4-scout-17b-16e-instruct",
+      model,
       messages: [
         {
           role: "system",
-          content: `You are a multilingual assistant. Respond in this language: ${language}.`
+          content: `You are a helpful ${isCodingQuery ? "AI coding assistant" : "multilingual AI assistant"}. Respond in this language: ${language}.`
         },
         { role: "user", content: message }
       ],
-      temperature: 1,
-      max_completion_tokens: 1024
+      temperature: isCodingQuery ? 0.6 : 1,
+      max_completion_tokens: isCodingQuery ? 8192 : 1024,
+      top_p: 0.95
     });
 
     const reply = chatCompletion.choices[0].message.content;
@@ -43,7 +52,7 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-// === Gemini 1.5 Flash Vision API ===
+// === /api/vision — Gemini 1.5 Flash Image-to-Text ===
 app.post('/api/vision', async (req, res) => {
   const { base64Image, message } = req.body;
   if (!base64Image) return res.status(400).json({ error: 'No image provided.' });
@@ -78,7 +87,7 @@ app.post('/api/vision', async (req, res) => {
   }
 });
 
-// === Groq STT API ===
+// === /api/stt — Speech-to-Text via Groq (Whisper) ===
 app.post('/api/stt', upload.single('audio'), async (req, res) => {
   const audioFilePath = req.file.path;
 
@@ -100,5 +109,5 @@ app.post('/api/stt', upload.single('audio'), async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 GroqMate API running at http://localhost:${PORT}`);
+  console.log(`GroqMate API running at http://localhost:${PORT}`);
 });
