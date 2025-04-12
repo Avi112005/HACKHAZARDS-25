@@ -8,10 +8,8 @@
 
 ## 📌 Problem Statement
 
-Select the problem statement number and title from the official list given in Participant Manual.
-
-**Example:**  
-**Problem Statement 7 – Transform the Future of Rural Commerce**
+  
+**Problem Statement 1 – Weave AI magic with Groq**
 
 ---
 
@@ -43,7 +41,7 @@ Briefly describe the real-world use case and the value it provides.
 ## 🛠️ Tech Stack
 
 ### Core Technologies Used:
-- Frontend:
+- Frontend: HTML,CSS,JS
 - Backend:
 - Database:
 - APIs:
