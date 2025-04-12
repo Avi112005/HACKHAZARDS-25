@@ -25,7 +25,7 @@ Briefly describe the real-world use case and the value it provides.
 ## 🧠 Team & Approach
 
 ### Team Name:  
-`Your team name here`
+`Rustrack`
 
 ### Team Members:  
 - Name 1 (GitHub / LinkedIn / Role)  
