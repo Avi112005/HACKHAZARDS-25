@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const cors = require('cors');
+const ffmpeg = require('fluent-ffmpeg');
 const Groq = require('groq-sdk');
 const dotenv = require('dotenv');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
@@ -21,10 +22,8 @@ app.use(express.static('public'));
 app.post('/api/chat', async (req, res) => {
   const { message, language } = req.body;
 
-  // Detect if the message is code-related
   const isCodingQuery = /code|function|loop|program|syntax|bug|error|compile|algorithm|write|java|python|c\+\+|html|css|javascript|react/i.test(message);
 
-  // Choose model based on content
   const model = isCodingQuery
     ? "qwen-2.5-coder-32b"
     : "meta-llama/llama-4-scout-17b-16e-instruct";
@@ -87,13 +86,24 @@ app.post('/api/vision', async (req, res) => {
   }
 });
 
-// === /api/stt — Speech-to-Text via Groq (Whisper) ===
+// === /api/stt — Speech-to-Text via Groq (Whisper) with FFmpeg Conversion ===
 app.post('/api/stt', upload.single('audio'), async (req, res) => {
   const audioFilePath = req.file.path;
+  const convertedFilePath = `${audioFilePath}.webm`; // Convert to a supported format
 
   try {
+    // Convert the audio file using FFmpeg
+    await new Promise((resolve, reject) => {
+      ffmpeg(audioFilePath)
+        .toFormat('webm')
+        .on('end', resolve)
+        .on('error', reject)
+        .save(convertedFilePath);
+    });
+
+    // Upload the converted file to Groq STT API
     const transcription = await groq.audio.transcriptions.create({
-      file: fs.createReadStream(audioFilePath),
+      file: fs.createReadStream(convertedFilePath),
       model: "whisper-large-v3",
       response_format: "verbose_json"
     });
@@ -103,7 +113,9 @@ app.post('/api/stt', upload.single('audio'), async (req, res) => {
     console.error("STT error:", err);
     res.status(500).json({ error: 'Transcription failed' });
   } finally {
+    // Cleanup original and converted files
     fs.unlinkSync(audioFilePath);
+    fs.unlinkSync(convertedFilePath);
   }
 });
 

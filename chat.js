@@ -33,11 +33,11 @@ document.addEventListener('DOMContentLoaded', function () {
     p.innerHTML = html;
     content.appendChild(p);
 
-    Prism.highlightAllUnder(content); 
+    Prism.highlightAllUnder(content);
     const codeBlocks = content.querySelectorAll('pre code');
     codeBlocks.forEach(block => {
       const copyButton = document.createElement('button');
-      copyButton.innerHTML = '<i class="fas fa-copy"></i>';  
+      copyButton.innerHTML = '<i class="fas fa-copy"></i>';
       copyButton.className = 'copy-button';
       copyButton.addEventListener('click', () => {
         const code = block.textContent;
@@ -163,12 +163,26 @@ document.addEventListener('DOMContentLoaded', function () {
         recognition = new SpeechRecognition();
         recognition.lang = 'en-US';
         recognition.interimResults = false;
-
+      
         recognition.onresult = event => {
           chatInput.value = event.results[0][0].transcript;
         };
 
-        recognition.onerror = e => console.error('Speech error:', e.error);
+        recognition.onerror = e => {
+          console.error('Speech error:', e.error);
+          if (e.error === 'network') {
+            alert("Network error detected. Please check your internet connection.");
+          } else if (e.error === 'not-allowed') {
+            alert("Microphone access is denied. Please enable it in your browser settings.");
+          } else if (e.error === 'service-not-available') {
+            alert("Speech service is unavailable. Try again later.");
+          } else if (e.error === 'no-speech' || e.error === 'audio-capture') {
+            console.warn("Minor speech recognition error:", e.error);
+          } else {
+            alert("Speech recognition error: " + e.error);
+          }
+        };
+
         recognition.onend = () => {
           isListening = false;
           micButton.classList.remove('active');
