@@ -61,7 +61,7 @@ The solution provides personalized assistance and enhanced accessibility, improv
 - Hosting:
 
 ### Sponsor Technologies Used (if any):
-- [✅] **Groq:** _How you used Groq_  
+✅ **Groq:** _How you used Groq_  
 - [ ] **Monad:** _Your blockchain implementation_  
 - [ ] **Fluvio:** _Real-time data handling_  
 - [ ] **Base:** _AgentKit / OnchainKit / Smart Wallet usage_  
