@@ -74,10 +74,10 @@ The solution provides personalized assistance and enhanced accessibility, improv
 
 Highlight the most important features of your project:
 
-- ✅ Feature 1  
-- ✅ Feature 2  
-- ✅ Feature 3  
-- ✅ Feature 4  
+✅ Real-time multilingual AI assistant for text, voice, and image-based communication  
+✅ Groq-powered educational tutor providing instant math problem feedback through voice and image input  
+✅ Vision-based accessibility tool offering live audio descriptions for visually impaired users  
+✅ AI-driven code editor with real-time analysis, intelligent suggestions, linting, and auto-generated documentation 
 
 Add images, GIFs, or screenshots if helpful!
 
