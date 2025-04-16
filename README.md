@@ -17,17 +17,18 @@
 
 This project creates a multilingual AI assistant that supports text, audio, and image inputs to serve students, professionals, developers, and those with accessibility needs. By leveraging Groq's AI models, the solution offers:
 
-Real-time feedback on math problems and learning activities.
+• Real-time feedback on math problems and learning activities.
 
-Live audio descriptions for visually impaired users.
+• Live audio descriptions for visually impaired users.
 
-Real-time code analysis and developer productivity tools.
+• Real-time code analysis and developer productivity tools.
 
-Health insights and personalized recommendations.
+• Health insights and personalized recommendations.
 
-News summarization for staying updated.
+• News summarization for staying updated.
 
 The solution provides personalized assistance and enhanced accessibility, improving efficiency across various use cases.
+
 ---
 
 ## 🧠 Team & Approach
