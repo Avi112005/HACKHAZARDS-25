@@ -103,8 +103,10 @@ Add images, GIFs, or screenshots if helpful!
 ## 🧪 How to Run the Project
 
 ### Requirements:
-- Node.js / Python / Docker / etc.
-- API Keys (if any)
+- Node.js (v18 or above) is used in this project
+- Groq API Key - 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
+  Google Gemini API Key - AIzaSyBEUr9cpuup0zV5hSVQkbGEzpXsAzJnw5M
+
 - .env file setup (if needed)
 
 ### Local Setup:
