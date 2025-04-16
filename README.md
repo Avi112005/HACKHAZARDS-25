@@ -139,11 +139,19 @@ Provide any backend/frontend split or environment setup notes here.
 
 ## 🧬 Future Scope
 
-List improvements, extensions, or follow-up features:
+- More Integrations
+Expand capabilities by integrating with popular financial APIs such as Plaid, Stripe, or Paytm for broader financial operations including budgeting, investing, and expense tracking.
 
-- 📈 More integrations  
-- 🛡️ Security enhancements  
-- 🌐 Localization / broader accessibility  
+- Security Enhancements
+Implement robust security measures like user authentication, end-to-end encryption, and multi-signature Stellar wallets to ensure safe and compliant transactions.
+
+- Localization & Accessibility - Broaden support for global users with multilingual responses, real-time translation, currency conversion, and features for visually impaired users, like screen-reader support and voice responses.
+
+- Multi-Modal Input - Incorporate voice, image, and document input to allow users to query with receipts, audio clips, or handwritten notes—enabling more natural and inclusive interactions.
+
+- Peer-to-Peer Features - Introduce social finance capabilities such as sending money to contacts, split payments, recurring transactions, and collaborative group wallets.
+
+- Insight Dashboard - Build a real-time dashboard with Groq-powered sentiment analysis, spending heatmaps, savings goals, and intelligent financial recommendations. 
 
 ---
 
