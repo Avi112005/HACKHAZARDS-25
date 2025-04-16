@@ -44,7 +44,9 @@ The solution provides personalized assistance and enhanced accessibility, improv
 
 ### Your Approach:  
 - We chose this problem to bridge the gap between advanced AI technology and everyday users. As the demand for multilingual support and AI-powered assistance grows, we saw an opportunity to create a unified platform that helps users across various domains such as education, health, development, and accessibility.  
+
 - We addressed key challenges such as ensuring the assistant understands and responds accurately in multiple languages, providing real-time processing for tasks like math problems, code analysis, and health insights, designing a vision-based tool for live audio descriptions to help visually impaired users, and integrating multiple AI features—text, image, and voice inputs—into a seamless experience.
+
 - During development, we faced challenges with real-time speech-to-text accuracy, which we overcame by using Groq's Whisper model for more accurate transcriptions. We also made breakthroughs by integrating image analysis with text and speech, enabling dynamic user interactions. Finally, we brainstormed ways to combine educational, health, and productivity features, ultimately using Groq’s ultra-fast inference to handle these varied use cases efficiently.
 
 ---
@@ -59,7 +61,7 @@ The solution provides personalized assistance and enhanced accessibility, improv
 - Hosting:
 
 ### Sponsor Technologies Used (if any):
-- [ ] **Groq:** _How you used Groq_  
+- [✅] **Groq:** _How you used Groq_  
 - [ ] **Monad:** _Your blockchain implementation_  
 - [ ] **Fluvio:** _Real-time data handling_  
 - [ ] **Base:** _AgentKit / OnchainKit / Smart Wallet usage_  
