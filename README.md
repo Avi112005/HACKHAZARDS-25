@@ -110,7 +110,8 @@ Add images, GIFs, or screenshots if helpful!
 - .env file setup (if needed)
 Create a .env file in the root directory with the following:
 
-GROQ_API_KEY= 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  GEMINI_API_KEY= AIzaSyBEUr9cpuup0zV5hSVQkbGEzpXsAzJnw5M
+GROQ_API_KEY= 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 
+GEMINI_API_KEY= AIzaSyBEUr9cpuup0zV5hSVQkbGEzpXsAzJnw5M
 
 
 
