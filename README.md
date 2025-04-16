@@ -54,10 +54,10 @@ The solution provides personalized assistance and enhanced accessibility, improv
 ## 🛠️ Tech Stack
 
 ### Core Technologies Used:
-- Frontend: HTML,CSS,JS
-- Backend:
-- Database:
-- APIs:
+- Frontend: HTML,CSS,JavaScript
+- Backend: Node.js, Express.js
+- Database: None (stateless prototype)
+- APIs: Groq API (chat, code, STT), Google Gemini Vision API
 - Hosting:
 
 ### Sponsor Technologies Used (if any):
@@ -92,7 +92,7 @@ Add images, GIFs, or screenshots if helpful!
 
 ## ✅ Tasks & Bonus Checklist
 
-- [ ] **All members of the team completed the mandatory task - Followed at least 2 of our social channels and filled the form** (Details in Participant Manual)  
+✅ **All members of the team completed the mandatory task - Followed at least 2 of our social channels and filled the form** (Details in Participant Manual)  
 - [ ] **All members of the team completed Bonus Task 1 - Sharing of Badges and filled the form (2 points)**  (Details in Participant Manual)
 - [ ] **All members of the team completed Bonus Task 2 - Signing up for Sprint.dev and filled the form (3 points)**  (Details in Participant Manual)
 
