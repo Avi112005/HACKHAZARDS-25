@@ -154,12 +154,6 @@ Implement robust security measures like user authentication, end-to-end encrypti
 
 ## 📎 Resources / Credits
 
-Got it! Here's an updated **Resources / Credits** section **without Stellar**, focusing only on the tools you actually used:
-
----
-
-### 📚 Resources / Credits
-
 - **APIs Used**:
   - [Groq SDK](https://groq.com/) – used for real-time multilingual chat, code generation, and speech-to-text with Whisper.
   - [Google Gemini API](https://ai.google.dev/) – for image-to-text understanding (vision model).
@@ -177,6 +171,6 @@ Got it! Here's an updated **Resources / Credits** section **without Stellar**, f
 
 ## 🏁 Final Words
 
-Share your hackathon journey — challenges, learnings, fun moments, or shout-outs!
+Building GroqMate at HACKHAZARDS has been an exciting ride! We challenged ourselves to integrate voice, vision, and real-time multilingual chat in one assistant — and learned so much along the way. From setting up Groq’s blazing-fast APIs to handling live speech and image input, every piece taught us something new. There were bugs, laughs, late-night debugging, and plenty of “it finally works!” moments. Huge shout-out to my teammates for their ideas and energy. This is just the beginning — GroqMate is here to grow! 
 
 ---
