@@ -37,10 +37,10 @@ The solution provides personalized assistance and enhanced accessibility, improv
 `Rustrack`
 
 ### Team Members:  
-- Name 1 (GitHub / LinkedIn / Role)  
-- Name 2  
-- Name 3  
-*(Add links if you want)*
+- Avi Singh (GitHub / LinkedIn / Role)  
+- Nisarg Makwana  
+- Adithyan Vijayan K  
+- Nidhi Pandey
 
 ### Your Approach:  
 - We chose this problem to bridge the gap between advanced AI technology and everyday users. As the demand for multilingual support and AI-powered assistance grows, we saw an opportunity to create a unified platform that helps users across various domains such as education, health, development, and accessibility.  
@@ -58,10 +58,10 @@ The solution provides personalized assistance and enhanced accessibility, improv
 - Backend: Node.js, Express.js
 - Database: None (stateless prototype)
 - APIs: Groq API (chat, code, STT), Google Gemini Vision API
-- Hosting:
+- Hosting: For Frontend Vercel ; For Backend Render 
 
 ### Sponsor Technologies Used (if any):
-✅ **Groq:** _How you used Groq_  
+✅ **Groq:** Groq powers GroqMate’s intelligence with real-time multilingual chat, fast speech-to-text, smart coding help, and financial intent understanding using models like `meta-llama/llama-4-maverick-17b-128e-instruct`, `qwen-qwq-32b`, and `whisper-large-v3`. 
 - [ ] **Monad:** _Your blockchain implementation_  
 - [ ] **Fluvio:** _Real-time data handling_  
 - [ ] **Base:** _AgentKit / OnchainKit / Smart Wallet usage_  
@@ -124,9 +124,6 @@ git clone https://github.com/Avi112005/HACKHAZARDS-25.git
 cd HACKHAZARDS-25
 npm install
 
-#For manually downloading dependecies
-npm install express multer fs cors fluent-ffmpeg groq-sdk dotenv @google/generative-ai
-
 # Start development server
 node server.js
 ```
@@ -157,9 +154,24 @@ Implement robust security measures like user authentication, end-to-end encrypti
 
 ## 📎 Resources / Credits
 
-- APIs or datasets used  
-- Open source libraries or tools referenced  
-- Acknowledgements  
+Got it! Here's an updated **Resources / Credits** section **without Stellar**, focusing only on the tools you actually used:
+
+---
+
+### 📚 Resources / Credits
+
+- **APIs Used**:
+  - [Groq SDK](https://groq.com/) – used for real-time multilingual chat, code generation, and speech-to-text with Whisper.
+  - [Google Gemini API](https://ai.google.dev/) – for image-to-text understanding (vision model).
+
+- **Open Source Libraries / Tools**:
+  - `express`, `cors`, `multer`, `dotenv`, `fs`, `fluent-ffmpeg` – for setting up the backend server, handling file uploads, and audio format conversion.
+  - `marked`, `prismjs` – for rendering Markdown and highlighting code on the frontend.
+  - `MediaRecorder API`, `SpeechRecognition API` – for capturing and transcribing voice input in the browser.
+
+- **Acknowledgements**:
+  - Huge thanks to the **Groq** and **Google AI** teams for enabling blazing-fast and accessible multimodal intelligence through their APIs and models.
+  - This project was built during **HACKHAZARDS** with the goal of pushing boundaries in multilingual, vision, and voice-enabled AI interactions.
 
 ---
 
