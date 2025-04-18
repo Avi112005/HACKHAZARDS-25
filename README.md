@@ -58,7 +58,7 @@ The solution provides personalized assistance and enhanced accessibility, improv
 - Backend: Node.js, Express.js
 - Database: None (stateless prototype)
 - APIs: Groq API (chat, code, STT), Google Gemini Vision API
-- Hosting: For Frontend Vercel ; For Backend Render 
+- Hosting: For Frontend Vercel ; For Backend Koyeb 
 
 ### Sponsor Technologies Used (if any):
 ✅ **Groq:** Groq powers GroqMate’s intelligence with real-time multilingual chat, fast speech-to-text, smart coding help, and financial intent understanding using models like `meta-llama/llama-4-maverick-17b-128e-instruct`, `qwen-qwq-32b`, and `whisper-large-v3`. 
@@ -93,8 +93,8 @@ Add images, GIFs, or screenshots if helpful!
 ## ✅ Tasks & Bonus Checklist
 
 ✅ **All members of the team completed the mandatory task - Followed at least 2 of our social channels and filled the form** (Details in Participant Manual)  
-- [ ] **All members of the team completed Bonus Task 1 - Sharing of Badges and filled the form (2 points)**  (Details in Participant Manual)
-- [ ] **All members of the team completed Bonus Task 2 - Signing up for Sprint.dev and filled the form (3 points)**  (Details in Participant Manual)
+✅ **All members of the team completed Bonus Task 1 - Sharing of Badges and filled the form (2 points)**  (Details in Participant Manual)
+✅ **All members of the team completed Bonus Task 2 - Signing up for Sprint.dev and filled the form (3 points)**  (Details in Participant Manual)
 
 *(Mark with ✅ if completed)*
 
