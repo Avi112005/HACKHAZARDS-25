@@ -85,7 +85,7 @@ Add images, GIFs, or screenshots if helpful!
 
 ## 📽️ Demo & Deliverables
 
-- **Demo Video Link:** [Paste YouTube or Loom link here]  
+- **Demo Video Link:** https://youtu.be/KMGXaWpo0BM  
 - **Pitch Deck / PPT Link:** https://drive.google.com/file/d/1cQ1Wmd91GgqU6xemqzkKceEtFV924qCt/view?usp=sharing
 
 ---
