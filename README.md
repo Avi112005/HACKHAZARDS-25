@@ -37,10 +37,10 @@ The solution provides personalized assistance and enhanced accessibility, improv
 `Rustrack`
 
 ### Team Members:  
-- Avi Singh (GitHub / LinkedIn / Role)  
-- Nisarg Makwana  
+- Avi Singh (https://www.linkedin.com/in/avisingh11/)  
+- Nisarg Makwana (https://www.linkedin.com/in/nisarg-makwana-1743a1293/)
 - Adithyan Vijayan K  
-- Nidhi Pandey
+- Nidhi Pandey (https://www.linkedin.com/in/nidhi-pandey-5082b8335/)
 
 ### Your Approach:  
 - We chose this problem to bridge the gap between advanced AI technology and everyday users. As the demand for multilingual support and AI-powered assistance grows, we saw an opportunity to create a unified platform that helps users across various domains such as education, health, development, and accessibility.  
