@@ -79,7 +79,7 @@ Highlight the most important features of your project:
 ✅ Vision-based accessibility tool offering live audio descriptions for visually impaired users  
 ✅ AI-driven code editor with real-time analysis, intelligent suggestions, linting, and auto-generated documentation 
 
-Add images, GIFs, or screenshots if helpful!
+![Screenshot](https://ibb.co/YTVdbqgD)
 
 ---
 
