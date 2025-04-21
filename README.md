@@ -79,7 +79,7 @@ Highlight the most important features of your project:
 ✅ Vision-based accessibility tool offering live audio descriptions for visually impaired users  
 ✅ AI-driven code editor with real-time analysis, intelligent suggestions, linting, and auto-generated documentation 
 
-![Screenshot](https://imagekit.io/tools/asset-public-link?detail=%7B%22name%22%3A%22Screenshot%20(130).png%22%2C%22type%22%3A%22image%2Fpng%22%2C%22signedurl_expire%22%3A%222028-04-20T06%3A46%3A53.601Z%22%2C%22signedUrl%22%3A%22https%3A%2F%2Fmedia-hosting.imagekit.io%2F4d007c9d48f2435a%2FScreenshot%2520(130).png%3FExpires%3D1839826014%26Key-Pair-Id%3DK2ZIVPTIP2VGHC%26Signature%3DmofIdJnhM1u0OdHAVlBWLtruoCKbZ7-mGX7ajsJtvJ4P5XZxREQNES7WOEVrRqvjoV2PaTmTrFE6g4~TzoDry2ds6pQdHRCKU3oD-illFpwR2A6DS9gkf~OFNr-6H1PvuprdQUkyj~R-Bzm5hL8i-sbhul1sPsoPPVpHKikjQuKXQssZaLcubiO-wsnX6wywDhr3dRYwbUGFEliBmgqp~0D9hen2MVoLYRxqy5oaNx9KSpMl~5B64acvUasSuUWF9AFSWSyKF-EzraT3gKTFSRVdP90S6tAyWxjBP~HLZq7edwNNXMbauqgID2qRW3BUDBL9~XCpkVMppDMzGXI0ZQ__%22%7D)
+![Image](https://github.com/user-attachments/assets/348ea09c-3bdb-4ed1-a12e-b4e4f788bfdc)
 
 ---
 
