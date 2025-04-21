@@ -39,7 +39,7 @@ The solution provides personalized assistance and enhanced accessibility, improv
 ### Team Members:  
 - Avi Singh (https://www.linkedin.com/in/avisingh11/)  
 - Nisarg Makwana (https://www.linkedin.com/in/nisarg-makwana-1743a1293/)
-- Adithyan Vijayan K  
+- Adithyan Vijayan K (https://github.com/Adithyan1644)
 - Nidhi Pandey (https://www.linkedin.com/in/nidhi-pandey-5082b8335/)
 
 ### Your Approach:  
@@ -67,7 +67,7 @@ The solution provides personalized assistance and enhanced accessibility, improv
 - [ ] **Base:** _AgentKit / OnchainKit / Smart Wallet usage_  
 - [ ] **Screenpipe:** _Screen-based analytics or workflows_  
 - [ ] **Stellar:** _Payments, identity, or token usage_
-*(Mark with ✅ if completed)*
+
 ---
 
 ## ✨ Key Features
@@ -80,6 +80,9 @@ Highlight the most important features of your project:
 ✅ AI-driven code editor with real-time analysis, intelligent suggestions, linting, and auto-generated documentation 
 
 ![Image](https://github.com/user-attachments/assets/348ea09c-3bdb-4ed1-a12e-b4e4f788bfdc)
+![Image](https://github.com/user-attachments/assets/cfccec24-4968-4f30-ad0a-2aa3c57dee43)
+![Image](https://github.com/user-attachments/assets/65062634-89d1-4288-ac27-f50e935bdb2a)
+![Image](https://github.com/user-attachments/assets/cdacd36e-545a-4f35-aa96-15e9762746e7)
 
 ---
 
@@ -96,7 +99,6 @@ Highlight the most important features of your project:
 - ✅ **All members of the team completed Bonus Task 1 - Sharing of Badges and filled the form (2 points)**  (Details in Participant Manual)
 - ✅ **All members of the team completed Bonus Task 2 - Signing up for Sprint.dev and filled the form (3 points)**  (Details in Participant Manual)
 
-*(Mark with ✅ if completed)*
 
 ---
 
